@@ -1,0 +1,13 @@
+data/
+.git/
+node_modules/
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+frontend/
+docs/
+.fitfactory-os/
+.DS_Store
+Thumbs.db
+*.db
