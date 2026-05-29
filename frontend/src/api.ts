@@ -1,4 +1,5 @@
-const BASE = import.meta.env.VITE_API_BASE || '/api';
+// 生产环境使用 Railway 后端
+const BASE = window.location.hostname === 'localhost' ? '/api' : 'https://fitfactory-os-production.up.railway.app/api';
 
 async function get<T>(url: string): Promise<T> {
   const r = await fetch(BASE + url);

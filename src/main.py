@@ -15,8 +15,16 @@ from src.models import Base
 engine = create_engine(DATABASE_URL, echo=False)
 SessionLocal = sessionmaker(bind=engine, autocommit=False, expire_on_commit=False)
 
-# 自动建表（开发模式，生产环境用 init_db.py）
+# 自动建表
 Base.metadata.create_all(bind=engine)
+
+# 首次启动自动填充种子数据
+with SessionLocal() as db:
+    from src.models.style import Style
+    if db.query(Style).count() == 0:
+        from src.seed_data import seed
+        seed()
+        db.close()
 
 
 # ── FastAPI 应用 ────────────────────────────────────────
