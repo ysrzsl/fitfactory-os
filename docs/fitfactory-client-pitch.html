@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitFactory OS — 服装厂智能工作台</title>
+<style>
+:root {
+  --bg: #0A1628;
+  --card: #111D32;
+  --accent: #C8A45A;
+  --accent2: #5B8BD4;
+  --text: #E8EDF3;
+  --sub: #8899B4;
+  --red: #E0556A;
+  --green: #4CAF84;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+.slide {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 60px clamp(24px, 10vw, 120px);
+  position: relative;
+}
+.slide::after {
+  content: counter(slide);
+  counter-increment: slide;
+  position: absolute;
+  bottom: 32px; right: 48px;
+  font-size: 13px; color: var(--sub);
+  letter-spacing: 1px;
+}
+body { counter-reset: slide; }
+.slide:nth-child(1)::after { content: none; }
+
+h1 { font-size: clamp(48px, 8vw, 96px); font-weight: 900; line-height: 1.1; letter-spacing: -1px; }
+h2 { font-size: clamp(28px, 4vw, 52px); font-weight: 700; margin-bottom: 40px; }
+h3 { font-size: 22px; font-weight: 700; margin-bottom: 16px; color: var(--accent); }
+.subtitle { font-size: clamp(20px, 2.5vw, 32px); color: var(--sub); margin-top: 16px; font-weight: 400; }
+.tag { display: inline-block; background: rgba(200,164,90,0.15); color: var(--accent); padding: 6px 16px; border-radius: 20px; font-size: 14px; font-weight: 600; margin-bottom: 24px; }
+
+/* Slide 1: Hero */
+.hero { align-items: center; text-align: center; }
+.hero h1 span { color: var(--accent); }
+.hero .subtitle { max-width: 600px; margin: 16px auto 0; }
+
+/* Pain points */
+.pain-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 900px; width: 100%; }
+.pain-card { background: var(--card); border-radius: 12px; padding: 32px; border: 1px solid rgba(255,255,255,0.06); }
+.pain-card .num { font-size: 48px; font-weight: 900; color: var(--red); opacity: 0.3; line-height: 1; margin-bottom: 12px; }
+.pain-card p { font-size: 16px; color: var(--sub); line-height: 1.6; }
+
+/* Solution */
+.sol-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 900px; width: 100%; }
+.sol-card { background: var(--card); border-radius: 12px; padding: 28px; border-left: 3px solid var(--accent2); }
+.sol-card h3 { margin-bottom: 8px; }
+.sol-card p { color: var(--sub); font-size: 15px; line-height: 1.6; }
+
+/* Feature detail */
+.feat-row { display: flex; gap: 40px; align-items: center; max-width: 1100px; width: 100%; }
+.feat-text { flex: 1; }
+.feat-visual { flex: 1; }
+.feat-list { list-style: none; }
+.feat-list li { padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); color: var(--sub); font-size: 16px; display: flex; align-items: center; gap: 12px; }
+.feat-list li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+.feat-visual img { width: 100%; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+
+/* Mobile twin */
+.mobile-twin { display: flex; gap: 24px; justify-content: center; max-width: 1100px; width: 100%; }
+.mobile-twin img { width: 240px; border-radius: 24px; border: 3px solid rgba(255,255,255,0.1); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+
+/* Closing */
+.closing { text-align: center; align-items: center; }
+.closing h1 { margin-bottom: 24px; }
+.cta { display: inline-block; background: var(--accent); color: #0A1628; padding: 16px 48px; border-radius: 12px; font-size: 20px; font-weight: 700; text-decoration: none; margin-top: 32px; transition: transform 0.2s; }
+.cta:hover { transform: scale(1.05); }
+
+/* Keyboard hint */
+.key-hint {
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+  background: rgba(255,255,255,0.06); padding: 8px 20px; border-radius: 20px;
+  font-size: 12px; color: var(--sub); z-index: 100; pointer-events: none;
+  transition: opacity 0.5s;
+}
+
+@media (max-width: 768px) {
+  .pain-grid, .sol-grid { grid-template-columns: 1fr; }
+  .feat-row { flex-direction: column; }
+  .mobile-twin { flex-wrap: wrap; }
+  .mobile-twin img { width: 160px; }
+  .slide { padding: 40px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Slide 1: Hero -->
+<section class="slide hero">
+  <div class="tag">服装行业数字化</div>
+  <h1>FitFactory <span>OS</span></h1>
+  <p class="subtitle">服装厂智能工作台 — 让管理从人追事，变成事追人</p>
+  <p style="color:var(--sub);margin-top:8px;font-size:14px">AI 驱动的生产管理，手机电脑都能用</p>
+</section>
+
+<!-- Slide 2: Pain -->
+<section class="slide">
+  <h2>每天，这些问题在消耗你的工厂</h2>
+  <div class="pain-grid">
+    <div class="pain-card">
+      <div class="num">01</div>
+      <p><strong style="color:var(--text)">排单靠 Excel 拖，撞单靠肉眼</strong><br>订单多了根本看不清谁撞了谁，插一张单全盘乱</p>
+    </div>
+    <div class="pain-card">
+      <div class="num">02</div>
+      <p><strong style="color:var(--text)">物料缺了才发现，满世界催</strong><br>电话微信追仓库、追采购，缺料导致停线才发现</p>
+    </div>
+    <div class="pain-card">
+      <div class="num">03</div>
+      <p><strong style="color:var(--text)">下车间挨个问"做到哪了"</strong><br>进度靠腿跑、靠嘴问，数据滞后半天，客户催单回答不上</p>
+    </div>
+    <div class="pain-card">
+      <div class="num">04</div>
+      <p><strong style="color:var(--text)">月底手抄计件单，对账对到眼花</strong><br>几十个工人、几十道工序，算错一笔都要返工</p>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 3: Solution -->
+<section class="slide">
+  <h2>FitFactory OS 帮你解决</h2>
+  <div class="sol-grid">
+    <div class="sol-card">
+      <h3>AI 自动排产，撞单实时检测</h3>
+      <p>输入订单，AI 自动匹配最优产线和日期。时间冲突红线标注，插单影响一目了然。</p>
+    </div>
+    <div class="sol-card">
+      <h3>物料缺料提前预警</h3>
+      <p>库存实时监控，低于安全线自动告警。订单物料齐套一键检查，缺什么、缺多少清清楚楚。</p>
+    </div>
+    <div class="sol-card">
+      <h3>手机实时看进度，大屏看全局</h3>
+      <p>车间边走边查每张单的进度。办公室大屏展示全厂产线状态、延期预警、今日产量。</p>
+    </div>
+    <div class="sol-card">
+      <h3>计件工资自动汇总，异常自动标</h3>
+      <p>扫码枪录入计件，月底一键出工资表。产量暴涨暴跌自动标记审查，再也不怕算错。</p>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 4: Feature 1 - AI Schedule -->
+<section class="slide">
+  <h2>AI 智能排单</h2>
+  <div class="feat-row">
+    <div class="feat-text">
+      <ul class="feat-list">
+        <li>新增订单 → 一键自动排产</li>
+        <li>AI 自动匹配最优产线 + 日期</li>
+        <li>撞单检测，时间冲突红线标注</li>
+        <li>客户插单？AI 模拟影响帮你决策</li>
+      </ul>
+    </div>
+    <div class="feat-visual">
+      <img src="images/fitfactory-schedule.png" alt="排单界面">
+    </div>
+  </div>
+</section>
+
+<!-- Slide 5: Feature 2 - Material + Dashboard -->
+<section class="slide">
+  <h2>物料管理 + 生产看板</h2>
+  <div class="feat-row">
+    <div class="feat-visual">
+      <img src="images/fitfactory-dashboard.png" alt="生产看板">
+    </div>
+    <div class="feat-text">
+      <ul class="feat-list">
+        <li>库存实时看，缺料自动预警</li>
+        <li>订单物料齐套一键检查</li>
+        <li>产线进度实时看板，延期风险自动提示</li>
+        <li>全厂状态大屏，老板一眼看清</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 6: Feature 3 - AI Assistant -->
+<section class="slide">
+  <h2>AI 厂长助理 — 像聊天一样操作系统</h2>
+  <div class="feat-row">
+    <div class="feat-text">
+      <ul class="feat-list">
+        <li>"SO-20260601 做到哪了？" — 秒回进度</li>
+        <li>"下周要交哪些单？" — 自动列出</li>
+        <li>"蕾丝缩水怎么处理？" — 调出工艺标准</li>
+        <li>"帮我排一下这个订单" — 直接排产</li>
+        <li style="color:var(--accent);border:none;font-weight:600">不需要学系统，说话就能用</li>
+      </ul>
+    </div>
+    <div class="feat-visual">
+      <img src="images/fitfactory-mobile-chat.png" alt="AI 助手" style="max-width:300px;display:block;margin:0 auto">
+    </div>
+  </div>
+</section>
+
+<!-- Slide 7: Feature 4 - Payroll + Export -->
+<section class="slide">
+  <h2>工资核算 + 报表导出</h2>
+  <div class="feat-row">
+    <div class="feat-visual">
+      <img src="images/fitfactory-mobile-orders.png" alt="订单管理">
+    </div>
+    <div class="feat-text">
+      <ul class="feat-list">
+        <li>扫码枪 / 手机录入计件，快</li>
+        <li>月底工资一键汇总，准</li>
+        <li>产量异常自动标记审查，稳</li>
+        <li>订单 / 工资 / 物料报表 Excel 一键导出</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 8: Any Device -->
+<section class="slide">
+  <h2>手机 + 电脑 + 大屏，都能用</h2>
+  <p style="color:var(--sub);margin-bottom:32px;font-size:16px">不需要装 App，浏览器打开就能用。添加到主屏幕就是原生体验。</p>
+  <div class="mobile-twin">
+    <div style="text-align:center">
+      <img src="images/fitfactory-mobile-chat.png" alt="AI助手">
+      <p style="margin-top:8px;font-size:14px;color:var(--sub)">AI 对话</p>
+    </div>
+    <div style="text-align:center">
+      <img src="images/fitfactory-mobile-orders.png" alt="订单管理">
+      <p style="margin-top:8px;font-size:14px;color:var(--sub)">订单管理</p>
+    </div>
+    <div style="text-align:center">
+      <img src="images/fitfactory-mobile-dashboard.png" alt="生产看板">
+      <p style="margin-top:8px;font-size:14px;color:var(--sub)">生产看板</p>
+    </div>
+  </div>
+  <p style="margin-top:32px;text-align:center;color:var(--green);font-size:15px">车间边走边查 · 老板随时看报表 · 手机就是管理中心</p>
+</section>
+
+<!-- Slide 9: Closing -->
+<section class="slide closing">
+  <div class="tag">FitFactory OS</div>
+  <h1 style="font-size:clamp(36px,6vw,72px)">让工厂管理<br>像聊天一样简单</h1>
+  <p style="color:var(--sub);font-size:18px;margin-top:16px">AI 排单 · 物料预警 · 实时看板 · 计件工资 · 手机可用</p>
+  <a href="#" class="cta">预约演示</a>
+  <p style="color:var(--sub);font-size:13px;margin-top:20px">FitFactory OS v0.1 · 服装厂智能工作台</p>
+</section>
+
+<div class="key-hint" id="hint">↓ 滚动翻页 · 或按 ← → 方向键</div>
+
+<script>
+// Keyboard navigation & hint fade
+let hintTimer;
+document.addEventListener('keydown', e => {
+  const slides = document.querySelectorAll('.slide');
+  const current = Math.round(window.scrollY / window.innerHeight);
+  if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+    e.preventDefault();
+    slides[Math.min(current + 1, slides.length - 1)].scrollIntoView();
+  }
+  if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+    e.preventDefault();
+    slides[Math.max(current - 1, 0)].scrollIntoView();
+  }
+  document.getElementById('hint').style.opacity = '0';
+  clearTimeout(hintTimer);
+  hintTimer = setTimeout(() => { document.getElementById('hint').style.opacity = '1'; }, 3000);
+});
+
+window.addEventListener('scroll', () => {
+  clearTimeout(hintTimer);
+  document.getElementById('hint').style.opacity = '0';
+  hintTimer = setTimeout(() => { document.getElementById('hint').style.opacity = '1'; }, 3000);
+}, { passive: true });
+</script>
+
+</body>
+</html>

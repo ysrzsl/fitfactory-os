@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+/* ── 暗色主题（默认） ── */
+:root {
+  --bg: #0f172a; --bg2: #1e293b; --bg3: #334155;
+  --text: #f1f5f9; --text2: #94a3b8; --text3: #64748b;
+  --accent: #3b82f6; --accent2: #8b5cf6;
+  --green: #22c55e; --yellow: #eab308; --red: #ef4444;
+  --border: #334155; --card-radius: 10px;
+  --card-pad: 14px; --gap: 12px; --fs: 14px; --fs-sm: 12px; --fs-lg: 16px; --fs-xl: 20px;
+  --nav-h: 56px; --sidebar-w: 220px;
+  --content-max: 960px;
+}
+
+/* ── 亮色主题 ── */
+[data-theme="light"] {
+  --bg: #ffffff; --bg2: #f8fafc; --bg3: #e2e8f0;
+  --text: #0f172a; --text2: #475569; --text3: #94a3b8;
+  --accent: #2563eb; --accent2: #7c3aed;
+  --green: #16a34a; --yellow: #ca8a04; --red: #dc2626;
+  --border: #e2e8f0;
+}
+
+/* ── 字体大小 ── */
+[data-font="sm"] { --fs: 12px; --fs-sm: 10px; --fs-lg: 14px; --card-pad: 10px; --gap: 8px; }
+[data-font="lg"] { --fs: 16px; --fs-sm: 14px; --fs-lg: 18px; --card-pad: 18px; --gap: 16px; }
+
+/* ── 基底 ── */
+body { margin: 0; background: var(--bg); color: var(--text); font-family: system-ui, sans-serif; font-size: var(--fs); transition: background 0.3s, color 0.3s; }
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* ── 卡片 ── */
+.card { background: var(--bg2); border-radius: var(--card-radius); padding: var(--card-pad); border: 1px solid var(--border); transition: background 0.3s; }
+.card:active { background: var(--bg3); }
+.card-hover:hover { background: var(--bg3); cursor: pointer; }
+
+/* ── 状态徽章 ── */
+.badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: var(--fs-sm); font-weight: 700; border: 2px solid transparent; }
+.badge-pending { background: #fef9c3; color: #854d0e; border-color: #eab308; }
+.badge-scheduled { background: #dbeafe; color: #1e40af; border-color: #3b82f6; }
+.badge-progress { background: #ede9fe; color: #5b21b6; border-color: #8b5cf6; }
+.badge-completed { background: #dcfce7; color: #166534; border-color: #22c55e; }
+.badge-delayed { background: #fee2e2; color: #991b1b; border-color: #ef4444; animation: pulse-badge 1.5s infinite; }
+@keyframes pulse-badge { 0%,100% { opacity:1 } 50% { opacity:0.6 } }
+
+/* ── 红黄绿警示 ── */
+.alert-red { border-left: 4px solid var(--red) !important; background: color-mix(in srgb, var(--red) 8%, var(--bg2)) !important; }
+.alert-yellow { border-left: 4px solid var(--yellow) !important; background: color-mix(in srgb, var(--yellow) 8%, var(--bg2)) !important; }
+.alert-green { border-left: 4px solid var(--green) !important; }
+.stat-danger { color: var(--red); font-weight: 700; font-size: var(--fs-lg); }
+.stat-warn { color: var(--yellow); font-weight: 700; font-size: var(--fs-lg); }
+.stat-ok { color: var(--green); font-weight: 700; }
+
+/* ── 网络状态 ── */
+.offline-bar { position: fixed; top: 0; left: 0; right: 0; background: var(--red); color: #fff; text-align: center; padding: 4px; font-size: 12px; z-index: 999; display: none; }
+.offline .offline-bar { display: block; }
+
+/* ── 全局搜索 ── */
+.search-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 999; display: none; align-items: flex-start; justify-content: center; padding-top: 20vh; }
+.search-overlay.active { display: flex; }
+.search-box { background: var(--bg2); border: 2px solid var(--accent); border-radius: 12px; padding: 12px 20px; width: 90%; max-width: 500px; font-size: 18px; color: var(--text); outline: none; }
+
+/* ── Toast ── */
+.toast { position: fixed; top: 60px; left: 50%; transform: translateX(-50%); background: var(--green); color: #fff; padding: 8px 24px; border-radius: 20px; font-size: 14px; z-index: 998; animation: toast-in 0.3s ease; pointer-events: none; }
+@keyframes toast-in { from { opacity:0; transform:translateX(-50%) translateY(-10px) } to { opacity:1; transform:translateX(-50%) translateY(0) } }
+
+/* ── 导入区 ── */
+.drop-zone { border: 2px dashed var(--border); border-radius: 12px; padding: 24px; text-align: center; color: var(--text2); cursor: pointer; transition: all 0.2s; }
+.drop-zone:hover { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 5%, transparent); }
+
+/* ── 打印 ── */
+@media print {
+  nav, header, .no-print { display: none !important; }
+  body { background: #fff; color: #000; }
+  .card { border: 1px solid #ccc; box-shadow: none; }
+}

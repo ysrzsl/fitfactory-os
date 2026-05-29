@@ -1,0 +1,96 @@
+import { useState, useEffect } from 'react';
+
+export default function QualityPage() {
+  const [records, setRecords] = useState<any[]>([]);
+  const [stats, setStats] = useState<any>(null);
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({ order_number: '', inspect_date: '', batch_size: '100', defect_count: '0', defect_type: '', severity: 'MINOR', inspector: '', result: 'PASS', notes: '' });
+
+  const load = async () => {
+    const [r, s] = await Promise.all([
+      fetch('/api/quality/?limit=20').then(r => r.json()),
+      fetch('/api/quality/stats').then(r => r.json()),
+    ]);
+    setRecords(r); setStats(s);
+  };
+
+  useEffect(() => { load(); }, []);
+
+  const submit = async () => {
+    await fetch('/api/quality/', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...form, batch_size: Number(form.batch_size), defect_count: Number(form.defect_count) }),
+    });
+    setShowForm(false); load();
+  };
+
+  const inputClass = "bg-[var(--bg3)] text-[var(--text)] border border-[var(--border)] rounded-lg px-3 py-2 text-sm outline-none";
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-lg font-bold">🔍 质量管理</h2>
+        <button onClick={() => setShowForm(!showForm)} className="bg-[var(--accent)] text-white px-3 py-1.5 rounded-lg text-sm font-bold">+ 记录</button>
+      </div>
+
+      {/* AQL 统计 */}
+      {stats && stats.total_inspections > 0 && (
+        <div className="grid grid-cols-3 gap-2 mb-3">
+          <div className="card text-center py-2"><div className="text-lg font-bold">{stats.total_inspections}</div><div className="text-[10px] text-[var(--text2)]">检验批次</div></div>
+          <div className={`card text-center py-2 ${stats.pass_rate >= 95 ? 'alert-green' : 'alert-yellow'}`}><div className="text-lg font-bold">{stats.pass_rate}%</div><div className="text-[10px] text-[var(--text2)]">合格率</div></div>
+          <div className={`card text-center py-2 ${stats.avg_defect_rate < 3 ? 'alert-green' : 'alert-red'}`}><div className="text-lg font-bold">{stats.avg_defect_rate}%</div><div className="text-[10px] text-[var(--text2)]">平均不良率</div></div>
+        </div>
+      )}
+
+      {/* 缺陷分布 */}
+      {stats?.defect_types?.length > 0 && (
+        <div className="card mb-3">
+          <h3 className="text-sm font-bold mb-1">缺陷分布</h3>
+          <div className="flex gap-2 flex-wrap">
+            {stats.defect_types.map((d: any) => (
+              <span key={d.type} className="px-2 py-0.5 rounded text-xs bg-[var(--bg3)] text-[var(--text2)]">{d.type}: {d.count}次</span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {showForm && (
+        <div className="card mb-3 space-y-2">
+          <div className="flex gap-2">
+            <input className={`flex-1 ${inputClass}`} placeholder="订单号" value={form.order_number} onChange={e => setForm({...form, order_number: e.target.value})} />
+            <input className={`flex-1 ${inputClass}`} type="date" value={form.inspect_date} onChange={e => setForm({...form, inspect_date: e.target.value})} />
+          </div>
+          <div className="flex gap-2">
+            <input className={`w-24 ${inputClass}`} placeholder="抽检数" type="number" value={form.batch_size} onChange={e => setForm({...form, batch_size: e.target.value})} />
+            <input className={`w-24 ${inputClass}`} placeholder="不良数" type="number" value={form.defect_count} onChange={e => setForm({...form, defect_count: e.target.value})} />
+            <select className={inputClass} value={form.defect_type} onChange={e => setForm({...form, defect_type: e.target.value})}>
+              <option value="">缺陷类型</option>
+              {['尺寸','色差','线头','污渍','破洞','其他'].map(t => <option key={t} value={t}>{t}</option>)}
+            </select>
+          </div>
+          <select className={inputClass} value={form.result} onChange={e => setForm({...form, result: e.target.value})}>
+            <option value="PASS">✅ 合格</option>
+            <option value="REWORK">🔧 返工</option>
+            <option value="REJECT">❌ 拒收</option>
+          </select>
+          <button onClick={submit} className="w-full bg-[var(--accent)] text-white py-2 rounded-lg text-sm font-bold">📝 记录</button>
+        </div>
+      )}
+
+      {/* 质检记录列表 */}
+      <div className="space-y-1.5">
+        {records.map((r: any) => (
+          <div key={r.id} className={`card flex items-center justify-between py-2 ${r.result !== 'PASS' ? 'alert-red' : ''}`}>
+            <div>
+              <div className="text-sm font-bold">{r.order_number} · {r.inspect_date}</div>
+              <div className="text-[10px] text-[var(--text2)]">抽检{r.batch_size}件 · 不良{r.defect_count}件({r.defect_rate}%) · {r.defect_type || '-'} · {r.inspector || '-'}</div>
+            </div>
+            <span className={`badge ${r.result==='PASS'?'badge-completed':r.result==='REWORK'?'badge-pending':'badge-delayed'}`}>
+              {r.result==='PASS'?'合格':r.result==='REWORK'?'返工':'拒收'}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

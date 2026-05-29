@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>杨胜溶 — 服装厂厂长助理</title>
+<style>
+:root {
+  --primary: #1a365d;
+  --accent: #2b6cb0;
+  --text: #2d3748;
+  --sub: #4a5568;
+  --light: #718096;
+  --bg: #f7fafc;
+  --border: #e2e8f0;
+  --tag-bg: #ebf4ff;
+  --tag-text: #2b6cb0;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif; background: #edf2f7; color: var(--text); line-height: 1.7; }
+.page { max-width: 794px; /* A4 */ margin: 24px auto; background: #fff; padding: 48px 56px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+@media print { body { background: #fff; } .page { box-shadow: none; margin: 0; padding: 32px 40px; } }
+
+/* Header */
+.header { border-bottom: 2px solid var(--primary); padding-bottom: 20px; margin-bottom: 24px; }
+.header h1 { font-size: 32px; font-weight: 800; color: var(--primary); letter-spacing: 2px; }
+.header .sub { font-size: 15px; color: var(--accent); margin-top: 4px; font-weight: 600; }
+.contact { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 12px; font-size: 13px; color: var(--light); }
+.contact span { white-space: nowrap; }
+
+/* Sections */
+.section { margin-bottom: 22px; }
+.section-title { font-size: 16px; font-weight: 700; color: var(--primary); border-left: 4px solid var(--accent); padding-left: 10px; margin-bottom: 12px; letter-spacing: 1px; }
+
+/* Highlights */
+.highlights { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 8px; }
+.hl-card { background: var(--bg); border-radius: 6px; padding: 14px; border: 1px solid var(--border); }
+.hl-card .hl-num { font-size: 24px; font-weight: 800; color: var(--accent); line-height: 1.3; }
+.hl-card .hl-title { font-size: 13px; font-weight: 600; color: var(--text); margin: 4px 0; }
+.hl-card .hl-desc { font-size: 12px; color: var(--sub); line-height: 1.5; }
+
+/* Project */
+.project-box { background: var(--bg); border-radius: 8px; padding: 18px 20px; border: 1px solid var(--border); margin-bottom: 14px; }
+.project-box .pj-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+.project-box .pj-name { font-size: 15px; font-weight: 700; color: var(--primary); }
+.project-box .pj-date { font-size: 12px; color: var(--light); }
+.project-box .pj-role { font-size: 12px; color: var(--accent); font-weight: 600; margin-bottom: 8px; }
+.project-box ul { list-style: none; }
+.project-box li { font-size: 13px; color: var(--sub); padding: 4px 0; padding-left: 16px; position: relative; line-height: 1.6; }
+.project-box li::before { content: "▸"; position: absolute; left: 0; color: var(--accent); font-size: 11px; }
+
+/* Experience */
+.exp-item { margin-bottom: 14px; }
+.exp-header { display: flex; justify-content: space-between; align-items: baseline; }
+.exp-header .exp-company { font-size: 14px; font-weight: 700; color: var(--text); }
+.exp-header .exp-date { font-size: 12px; color: var(--light); }
+.exp-role { font-size: 12px; color: var(--accent); font-weight: 600; margin: 2px 0 6px; }
+.exp-item ul { list-style: none; }
+.exp-item li { font-size: 13px; color: var(--sub); padding: 3px 0; padding-left: 16px; position: relative; line-height: 1.6; }
+.exp-item li::before { content: "·"; position: absolute; left: 0; color: var(--accent); font-weight: bold; }
+
+/* Tags */
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.tag { background: var(--tag-bg); color: var(--tag-text); padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+
+/* Self-eval */
+.self-eval { font-size: 13px; color: var(--sub); line-height: 1.8; padding: 14px; background: var(--bg); border-radius: 6px; }
+
+@media (max-width: 794px) {
+  .page { margin: 0; padding: 24px; }
+  .highlights { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- Header -->
+<div class="header">
+  <h1>杨胜溶</h1>
+  <div class="sub">求职意向：服装厂厂长助理 · 懂数据 · 能开发 · 愿意下车间</div>
+  <div class="contact">
+    <span>📍 广西河池</span>
+    <span>📞 189-7780-2469</span>
+    <span>📧 1656593928@qq.com</span>
+    <span>🎂 22岁</span>
+    <span>🎓 广西职业技术学院 · 计算机应用技术</span>
+  </div>
+</div>
+
+<!-- Core Advantages -->
+<div class="section">
+  <div class="section-title">🔥 核心优势</div>
+  <div class="highlights">
+    <div class="hl-card">
+      <div class="hl-num">3000+ SKU/日</div>
+      <div class="hl-title">大物流数据实战</div>
+      <div class="hl-desc">TEMU跨境物流数据员，全链路时效监控，秒级异常定位</div>
+    </div>
+    <div class="hl-card">
+      <div class="hl-num">FitFactory OS</div>
+      <div class="hl-title">独立开发工业系统</div>
+      <div class="hl-desc">自研服装厂智能工作台，涵盖排产·物料·计件·AI问答</div>
+    </div>
+    <div class="hl-card">
+      <div class="hl-num">效率↑40%</div>
+      <div class="hl-title">Excel自动化+工具开发</div>
+      <div class="hl-desc">精通高级报表，能将模板自动化，用代码替代重复劳动</div>
+    </div>
+  </div>
+</div>
+
+<!-- Project -->
+<div class="section">
+  <div class="section-title">💻 核心项目经历</div>
+  <div class="project-box">
+    <div class="pj-header">
+      <span class="pj-name">FitFactory OS — 服装厂智能工作台</span>
+      <span class="pj-date">2026.04 – 2026.05（已完工并全量测试通过）</span>
+    </div>
+    <div class="pj-role">独立设计与开发者</div>
+    <ul>
+      <li><strong>AI 生产排单引擎</strong>：设计基于款式历史产能与产线空闲窗口的自动排产算法，支持撞单检测与插单模拟，利用 DeepSeek AI 进行方案智能排序，将每周耗时半天的排单工作缩短至分钟级。</li>
+      <li><strong>物料管理与齐套检查</strong>：实现按订单 BOM 逐一核对物料库存，缺料秒级预警并自动生成采购建议，从源头封堵因断料停工的风险。</li>
+      <li><strong>计件工资核算器</strong>：开发支持扫码枪友好录入的批量计件系统，月度自动汇总并标记"薪资偏离均值＞30%"的异常记录，杜绝错算漏算。</li>
+      <li><strong>AI 智能问答（基于 DeepSeek）</strong>：集成 8 个核心 Function Calling 工具，实现自然语言调度数据库（如"SO-001 做到哪了""下周要交哪些单"），让厂长像聊天一样操作系统。</li>
+      <li><strong>移动端优先</strong>：React PWA 架构，手机浏览器打开即用，添加到主屏幕等同于原生 App，车间边走边查进度。</li>
+    </ul>
+    <div class="tags">
+      <span class="tag">自动排产</span><span class="tag">物料齐套</span><span class="tag">计件工资</span><span class="tag">AI Agent</span><span class="tag">React PWA</span><span class="tag">DeepSeek</span>
+    </div>
+  </div>
+</div>
+
+<!-- Work Experience -->
+<div class="section">
+  <div class="section-title">💼 实习工作经历</div>
+  <div class="exp-item">
+    <div class="exp-header">
+      <span class="exp-company">TEMU 跨境物流（拼多多）</span>
+      <span class="exp-date">2024.11 – 2025.12</span>
+    </div>
+    <div class="exp-role">库存数据员</div>
+    <ul>
+      <li>负责 WMS 系统数据采集、清洗与分析，建立班次小时级产能播报机制，通过多维数据可视化支撑运营决策。</li>
+      <li>通过全链路时效监控与数据复盘，协助将拣货差异率、短拣率降至 <strong>0.55% 以内</strong>；开仓仅 5 个月，人效月均增长率约 <strong>20%</strong>。</li>
+      <li>开发自动化 Excel 模板整合 4 大园区数据，将日报产出效率提升 <strong>40%</strong>，支撑管理层每日快速决策。</li>
+      <li>通过监控任务看板精准识别瓶颈环节，提升现场异常处理速度 <strong>20%</strong>。</li>
+    </ul>
+    <div class="tags">
+      <span class="tag">WMS系统</span><span class="tag">数据可视化</span><span class="tag">Excel自动化</span><span class="tag">全链路监控</span>
+    </div>
+  </div>
+</div>
+
+<!-- Education -->
+<div class="section">
+  <div class="section-title">🎓 教育背景</div>
+  <div class="exp-item">
+    <div class="exp-header">
+      <span class="exp-company">广西职业技术学院</span>
+      <span class="exp-date">2022.09 – 2025.07</span>
+    </div>
+    <div class="exp-role">计算机应用技术 · 大专</div>
+    <ul>
+      <li>🏆 全国大学生职业规划大赛 <strong>银奖</strong> · 信息素养大赛 <strong>一等奖</strong></li>
+    </ul>
+    <div class="tags">
+      <span class="tag">Excel高级函数</span><span class="tag">MySQL</span><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">WMS系统</span>
+    </div>
+  </div>
+</div>
+
+<!-- Self Evaluation -->
+<div class="section">
+  <div class="section-title">📝 自我评价</div>
+  <div class="self-eval">
+    我是一名<strong>相信技术能解决实际问题的务实派</strong>。2024-2025 年在 TEMU 大物流高压环境下，我练就了极强的流程监控与异常处理能力；2026 年初至今，我全力投入服装行业数字化工具的研发，独立完成了 FitFactory OS 智能工作台。虽未在缝纫机前干过，但数据、物料、成本和进销存的底层逻辑完全相通。我务实、愿意下车间，希望用数字化能力帮厂长分担排单与统计压力，助力工厂管理升级。
+  </div>
+</div>
+
+</div>
+
+</body>
+</html>
