@@ -1,7 +1,7 @@
 # 🗄️ 数据库设计文档 — FitFactory OS
 
-> 最后更新：2026-05-28  
-> 维护规则：每次新增/修改/删除表、字段、索引时，必须同步更新本文档
+> 最后更新：2026-05-29 · 18 张表  
+> 新增: workers / salary_adjustments / customers / cost_sheets / qc_records / equipment / maintenance_records / process_templates
 
 ---
 

@@ -35,13 +35,18 @@ export default function Orders({ showToast }: { showToast?: (m: string) => void 
 
       {showForm && (
         <div className="card mb-3 space-y-2">
-          <input className={inputClass} placeholder="订单号" value={form.order_number} onChange={e => setForm({...form, order_number: e.target.value})} />
-          <input className={inputClass} placeholder="客户名" value={form.customer_name} onChange={e => setForm({...form, customer_name: e.target.value})} />
+          <div><label className="text-[10px] text-[var(--text3)] uppercase mb-0.5 block">订单号 *</label>
+          <input className={inputClass} placeholder="如 SO-20260701" value={form.order_number} onChange={e => setForm({...form, order_number: e.target.value})} /></div>
+          <div><label className="text-[10px] text-[var(--text3)] uppercase mb-0.5 block">客户名称</label>
+          <input className={inputClass} placeholder="如 金狐狸服饰" value={form.customer_name} onChange={e => setForm({...form, customer_name: e.target.value})} /></div>
           <div className="flex gap-2">
-            <input className={`flex-1 ${inputClass}`} placeholder="款号" value={form.style_code} onChange={e => setForm({...form, style_code: e.target.value})} />
-            <input className={`w-24 ${inputClass}`} type="number" value={form.total_quantity} onChange={e => setForm({...form, total_quantity: Number(e.target.value)})} />
+            <div className="flex-1"><label className="text-[10px] text-[var(--text3)] uppercase mb-0.5 block">款号</label>
+            <input className={inputClass} placeholder="NK-2026-001" value={form.style_code} onChange={e => setForm({...form, style_code: e.target.value})} /></div>
+            <div className="w-28"><label className="text-[10px] text-[var(--text3)] uppercase mb-0.5 block">件数</label>
+            <input className={inputClass} type="number" value={form.total_quantity} onChange={e => setForm({...form, total_quantity: Number(e.target.value)})} /></div>
           </div>
-          <input className={inputClass} type="date" value={form.delivery_date} onChange={e => setForm({...form, delivery_date: e.target.value})} />
+          <div><label className="text-[10px] text-[var(--text3)] uppercase mb-0.5 block">交期 *（客户要求的交货日期）</label>
+          <input className={inputClass} type="date" value={form.delivery_date} onChange={e => setForm({...form, delivery_date: e.target.value})} /></div>
           <button onClick={submit} className="w-full bg-[var(--green)] text-white py-2.5 rounded-lg text-sm font-bold">✅ 创建订单</button>
         </div>
       )}

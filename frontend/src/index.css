@@ -7,7 +7,7 @@
   --accent: #3b82f6; --accent2: #8b5cf6;
   --green: #22c55e; --yellow: #eab308; --red: #ef4444;
   --border: #334155; --card-radius: 10px;
-  --card-pad: 14px; --gap: 12px; --fs: 14px; --fs-sm: 12px; --fs-lg: 16px; --fs-xl: 20px;
+  --card-pad: 14px; --gap: 12px; --fs: 15px; --fs-sm: 13px; --fs-lg: 17px; --fs-xl: 22px;
   --nav-h: 56px; --sidebar-w: 220px;
   --content-max: 960px;
 }
@@ -22,8 +22,17 @@
 }
 
 /* ── 字体大小 ── */
-[data-font="sm"] { --fs: 12px; --fs-sm: 10px; --fs-lg: 14px; --card-pad: 10px; --gap: 8px; }
-[data-font="lg"] { --fs: 16px; --fs-sm: 14px; --fs-lg: 18px; --card-pad: 18px; --gap: 16px; }
+[data-font="sm"] { --fs: 13px; --fs-sm: 11px; --fs-lg: 15px; --card-pad: 10px; --gap: 8px; }
+[data-font="lg"] { --fs: 17px; --fs-sm: 15px; --fs-lg: 20px; --card-pad: 18px; --gap: 16px; }
+
+/* ── 字体覆盖（让 Tailwind 字号跟随 CSS 变量） ── */
+[data-font] .text-xs { font-size: var(--fs-sm) !important; }
+[data-font] .text-sm { font-size: var(--fs) !important; }
+[data-font] .text-base { font-size: var(--fs) !important; }
+[data-font] .text-lg { font-size: var(--fs-lg) !important; }
+[data-font] .text-xl { font-size: var(--fs-xl) !important; }
+[data-font] .text-2xl { font-size: calc(var(--fs-xl) + 4px) !important; }
+[data-font] .text-3xl { font-size: calc(var(--fs-xl) + 8px) !important; }
 
 /* ── 基底 ── */
 body { margin: 0; background: var(--bg); color: var(--text); font-family: system-ui, sans-serif; font-size: var(--fs); transition: background 0.3s, color 0.3s; }
