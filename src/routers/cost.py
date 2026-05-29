@@ -32,3 +32,12 @@ def all_costs(db: Session = Depends(get_db)):
 @router.get("/summary")
 def summary(db: Session = Depends(get_db)):
     return get_profit_summary(db)
+
+
+@router.post("/reset")
+def reset_costs(db: Session = Depends(get_db)):
+    """清空所有成本数据"""
+    from src.models.cost_sheet import CostSheet
+    db.query(CostSheet).delete()
+    db.commit()
+    return {"message": "已清空，请重新核算"}

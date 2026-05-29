@@ -14,8 +14,9 @@ export default function CostPage() {
   useEffect(()=>{load()},[]);
 
   const calcAll = async () => {
-    setCalculating(true); setMsg('正在核算所有订单...');
+    setCalculating(true); setMsg('正在核算...');
     try {
+      await fetch(`${API}/cost/reset`,{method:'POST'});
       const orders = await fetch(`${API}/orders/`).then(r=>r.json());
       for (const o of orders) {
         await fetch(`${API}/cost/calculate`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({order_number:o.order_number})});
