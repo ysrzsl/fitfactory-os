@@ -1,5 +1,8 @@
 // 生产环境使用 Railway 后端
-const BASE = window.location.hostname === 'localhost' ? '/api' : 'https://fitfactory-os-production.up.railway.app/api';
+const API_BASE = window.location.hostname === 'localhost' ? '/api' : 'https://fitfactory-os-production.up.railway.app/api';
+const BASE = API_BASE;
+
+export { API_BASE };
 
 async function get<T>(url: string): Promise<T> {
   const r = await fetch(BASE + url);

@@ -3,14 +3,24 @@ import { api } from '../api';
 
 interface Msg { role: 'user' | 'assistant'; content: string; }
 
+const CACHE_KEY = 'ffos_chat_msgs';
+const DEFAULT: Msg[] = [
+  { role: 'assistant', content: '你好！我是 AI 厂长助理 👋\n\n你可以问我订单进度、产线状态、排产、插单模拟等问题。' }
+];
+
+function loadCache(): Msg[] {
+  try { const d = sessionStorage.getItem(CACHE_KEY); return d ? JSON.parse(d) : [...DEFAULT]; }
+  catch { return [...DEFAULT]; }
+}
+
 export default function Chat({ showToast: _ }: { showToast?: (m: string) => void }) {
-  const [msgs, setMsgs] = useState<Msg[]>([
-    { role: 'assistant', content: '你好！我是 AI 厂长助理 👋\n\n你可以问我订单进度、产线状态、排产、插单模拟等问题。' }
-  ]);
+  const [msgs, setMsgs] = useState<Msg[]>(loadCache);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
 
+  // 每次消息变化写入缓存
+  useEffect(() => { sessionStorage.setItem(CACHE_KEY, JSON.stringify(msgs)); }, [msgs]);
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [msgs]);
 
   const send = async () => {

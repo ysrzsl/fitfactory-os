@@ -16,6 +16,20 @@ TOOL_DEFINITIONS: list[dict] = [
     {
         "type": "function",
         "function": {
+            "name": "search_knowledge",
+            "description": "搜索工艺标准和 SOP 知识库。用于回答工艺问题、操作规范、异常处理流程。如'面料缩水怎么处理''设备故障怎么办''插单流程是什么'",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string", "description": "搜索关键词，如'缩水'、'故障'、'插单流程'"}
+                },
+                "required": ["query"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
             "name": "query_database",
             "description": "执行 SQL 查询数据库。表结构见 DATABASE.md。用于查订单状态、进度、工资、产线效率等",
             "parameters": {
@@ -136,6 +150,8 @@ def execute_tool(name: str, arguments: str) -> str:
             return _tool_get_delays()
         elif name == "run_auto_schedule":
             return _tool_run_schedule(args.get("order_number", ""))
+        elif name == "search_knowledge":
+            return _tool_search_knowledge(args.get("query", ""))
         else:
             return json.dumps({"error": f"未知工具: {name}"}, ensure_ascii=False)
     except Exception as e:
@@ -207,6 +223,15 @@ def _tool_get_order_status(order_number: str) -> str:
         }, ensure_ascii=False)
     finally:
         session.close()
+
+
+def _tool_search_knowledge(query: str) -> str:
+    """搜索知识库"""
+    from src.ai.rag import search_knowledge
+    results = search_knowledge(query, top_k=3)
+    if not results:
+        return json.dumps({"message": "知识库中暂无相关资料，建议咨询车间组长或工艺主管"}, ensure_ascii=False)
+    return json.dumps(results, ensure_ascii=False)
 
 
 def _tool_simulate_insertion(args: dict) -> str:
