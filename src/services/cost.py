@@ -18,7 +18,6 @@ MATERIAL_PRICES = {
 ORDER_AMOUNTS = {
     "内衣": 25, "文胸": 35, "睡衣": 50,
 }  # 每件售价
-}
 
 
 def calc_order_cost(order_number: str, db: Session, order_amount: float = 0, overhead: float = 0) -> CostSheet:
