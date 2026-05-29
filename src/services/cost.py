@@ -14,9 +14,10 @@ MATERIAL_PRICES = {
     "吊带": 0.6, "弹力网眼": 13,
 }
 
-# 各款式估算订单金额（用于演示）
+# 各款式估算订单金额（用于演示 · 出厂价）
 ORDER_AMOUNTS = {
-    "内衣": 15, "文胸": 22, "睡衣": 35,  # 每件售价
+    "内衣": 25, "文胸": 35, "睡衣": 50,
+}  # 每件售价
 }
 
 
@@ -24,10 +25,12 @@ def calc_order_cost(order_number: str, db: Session, order_amount: float = 0, ove
     order = db.query(Order).filter(Order.order_number == order_number).first()
     if not order: return None
 
-    # 人工成本
+    # 人工成本（无计件数据时按 0.6元/件估算）
     labor = db.query(func.sum(PieceWorkRecord.quantity * PieceWorkRecord.unit_price)).filter(
         PieceWorkRecord.order_number == order_number
     ).scalar() or 0
+    if labor == 0:
+        labor = order.total_quantity * 0.6
 
     # 物料成本 = BOM × 单价
     material = 0
