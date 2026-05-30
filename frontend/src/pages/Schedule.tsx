@@ -75,11 +75,25 @@ export default function Schedule({ showToast: _ }: { showToast?: (m: string) => 
         <div className="card mt-3">
           {result.error ? <p className="text-[var(--red)] text-sm">{result.error}</p> : (
             <div className="space-y-1.5 text-sm">
+              {/* 自动排产格式：嵌套 recommended 对象 */}
               {result.recommended && (
                 <>
                   <div className="text-[var(--green)] font-bold">✅ 推荐: {result.recommended.line}</div>
                   <div className="text-[var(--text2)]">{result.recommended.start_date} → {result.recommended.end_date} · {result.recommended.work_days}天 · {result.recommended.on_time ? '✅ 按时' : '⚠️ 延期'}</div>
                 </>
+              )}
+              {/* 插单模拟格式：扁平字段 */}
+              {result.recommended_line && (
+                <>
+                  <div className="text-[var(--green)] font-bold">✅ 推荐产线: {result.recommended_line}</div>
+                  <div className="text-[var(--text2)]">{result.start_date} → {result.end_date} · {result.work_days}天</div>
+                  {result.summary && <div className="text-[var(--text2)] text-xs">{result.summary}</div>}
+                </>
+              )}
+              {result.can_insert !== undefined && (
+                <div className={`text-xs font-bold mt-1 ${result.can_insert ? 'text-[var(--green)]' : 'text-[var(--yellow)]'}`}>
+                  {result.can_insert ? '✅ 可直接插入' : '⚠️ 影响较大，建议审批后插入'}
+                </div>
               )}
               {result.affected_orders?.length > 0 && (
                 <div className="mt-2 pt-2 border-t border-[var(--border)]">
