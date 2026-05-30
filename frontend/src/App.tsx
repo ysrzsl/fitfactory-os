@@ -157,9 +157,12 @@ export default function App() {
         <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[var(--bg2)] border-t border-[var(--border)] flex justify-around py-1.5 z-50 no-print" style={{ height: 'var(--nav-h)' }}>
           {NAV.map(n => (
             <button key={n.id} onClick={() => setPage(n.id)}
-              className={`flex flex-col items-center px-1.5 py-0.5 text-[11px] transition ${page === n.id ? 'text-[var(--accent)]' : 'text-[var(--text2)]'}`}>
-              <span className="text-base">{n.icon}</span>
-              <span className="text-[10px]">{n.label.slice(2, 4)}</span>
+              className={`flex items-center justify-center px-1 py-0.5 text-[12px] whitespace-nowrap transition ${
+                page === n.id
+                  ? 'text-[var(--accent)] font-bold'
+                  : 'text-[var(--text2)]'
+              }`}>
+              <span className="truncate">{n.label.replace(/^[^\s]+\s*/, '')}</span>
             </button>
           ))}
         </nav>
